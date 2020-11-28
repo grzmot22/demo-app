@@ -4,11 +4,11 @@
     "slug": "test-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./src/assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,16 +19,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.solomon.test",
+      "googleServicesFile":"./GoogleService-Info.plist",
+      "config": {
+      "googleMapsApiKey": "AIzaSyCTM1M-JoRlDUDPDKAkBR-OMdBUft29qxI",
+      "googleSignIn": {
+        "reservedClientId":"com.googleusercontent.apps.757905477962-niu4gb9j3k9nskn2nbvu7tsngehbovct"
+      }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.solomon.test",
+      "googleServicesFile": "./google-services.json",
+      "config": {
+   
+      "googleMaps": {
+        "apiKey":"AIzaSyDqA2jMRR7jc3C0xIytGdDGbHSUgZuLMQA"
+      }
       }
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./src/assets/images/favicon.png"
     }
   }
 }

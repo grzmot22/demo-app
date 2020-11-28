@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "757905477962",
+    "firebase_url": "https://test-app-f3dac.firebaseio.com",
+    "project_id": "test-app-f3dac",
+    "storage_bucket": "test-app-f3dac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:757905477962:android:581f346c7112bbb6cdb1b3",
+        "android_client_info": {
+          "package_name": "com.solomon.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "757905477962-or3jed6tuprfc0k3jvagtveliv03kni8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.solomon.test",
+            "certificate_hash": "e1a32797da82cdd8a659a128bdf53909c51d196f"
+          }
+        },
+        {
+          "client_id": "757905477962-snukh7r8btns6bnl29ahavojphef03o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfa2XLbBoA39NefhV0To5PNWTwdwPtZW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "757905477962-snukh7r8btns6bnl29ahavojphef03o3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "757905477962-niu4gb9j3k9nskn2nbvu7tsngehbovct.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.solomon.test"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

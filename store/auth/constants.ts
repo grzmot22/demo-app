@@ -1,0 +1,5 @@
+export enum Constants {
+  AUTH_LOGIN = "AUTH_LOGIN",
+  AUTH_LOGIN_BEGIN = "AUTH_LOGIN_BEGIN",
+  AUTH_LOGOUT = "AUTH_LOGOUT"
+}
