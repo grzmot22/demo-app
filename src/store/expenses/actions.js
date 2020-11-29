@@ -32,7 +32,6 @@ export const addExpense = (expenseData) => {
       });      
     };
   };
-};
 
 export const startRemoveExpense = ({ id } = {}) => {
   return (dispatch, getState) => {
@@ -59,7 +58,7 @@ return (dispatch, getState) => {
 
 export const setExpenses = (expenses) => ({
   type: types.SET_EXPENSES,
-  payload:{expenses}
+  payload:{ expenses }
 });
 
 export const startSetExpenses = () => {
@@ -68,10 +67,10 @@ export const startSetExpenses = () => {
   return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
     const expenses = [];
 
-    snapshot.forEach((chlidSnapshot) => {
+    snapshot.forEach((childSnapshot) => {
       expenses.push({
-        id: chlidSnapshot.key,
-        ...chlidSnapshot.val()
+        id: childSnapshot.key,
+        ...childSnapshot.val()
       });
     });
 
