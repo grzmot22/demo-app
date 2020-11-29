@@ -8,7 +8,7 @@ const initialState = {
   endDate: moment().endOf('month')
 };
 
-export default function authReducer(state = initialState, action) {
+export default function filterReducer(state = initialState, action) {
   switch (action.type) {
     case types.SET_TEXT_FILTER:
       return {
