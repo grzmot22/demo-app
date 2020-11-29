@@ -1,91 +1,39 @@
+import moment from 'moment';
 import types from "./types";
 
 const initialState = {
-  userId: "",
-  accessToken: "",
-  refreshToken: "",
-  signInSuccess: false,
-  signInLoading: false,
-  signInError: null,
-  refreshTokenSuccess: false,
-  refreshTokenLoading: false,
-  refreshTokenError: null,
-  forgotPasswordSuccess: false,
-  forgotPasswordLoading: false,
-  forgotPasswordError: null
+  text: '',
+  sortBy: 'date',
+  startDate: moment().startOf('month'),
+  endDate: moment().endOf('month')
 };
 
 export default function authReducer(state = initialState, action) {
   switch (action.type) {
-    case types.SIGN_IN_BEGIN:
+    case types.SET_TEXT_FILTER:
       return {
         ...state,
-        signInSuccess: false,
-        signInLoading: true,
-        signInError: null
+        text: action.payload.text
       };
-    case types.SIGN_IN_SUCCESS:
+    case types.SORT_BY_DATE:
       return {
         ...state,
-        signInSuccess: true,
-        signInLoading: false,
-        userId: action.payload.userId,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken
+        sortBy: 'date'
       };
-    case types.SIGN_IN_FAILURE:
+    case types.SORT_BY_AMOUNT:
       return {
         ...state,
-        signInLoading: false,
-        signInError: action.payload.error
+        sortBy: 'amount'
       };
-    case types.FORGOT_PASSWORD_BEGIN:
+    case types.SET_START_DATE:
       return {
         ...state,
-        forgotPasswordSuccess: false,
-        forgotPasswordLoading: true,
-        forgotPasswordError: null
+        startDate: action.payload.startDate
       };
-    case types.FORGOT_PASSWORD_SUCCESS:
+    case types.SET_END_DATE:
       return {
         ...state,
-        forgotPasswordSuccess: true,
-        forgotPasswordLoading: false
-      };
-    case types.FORGOT_PASSWORD_FAILURE:
-      return {
-        ...state,
-        forgotPasswordLoading: false,
-        forgotPasswordError: action.payload.error
-      };
-    case types.SIGN_OUT:
-      return {
-        ...state,
-        userId: "",
-        accessToken: "",
-        refreshToken: ""
-      };
-    case types.REFRESH_TOKEN_BEGIN:
-      return {
-        ...state,
-        refreshTokenSuccess: false,
-        refreshTokenLoading: true,
-        refreshTokenError: null
-      };
-    case types.REFRESH_TOKEN_SUCCESS:
-      return {
-        ...state,
-        refreshTokenSuccess: true,
-        refreshTokenLoading: false,
-        userId: action.payload.userId,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken
-      };
-    case types.REFRESH_TOKEN_FAILURE:
-      return {
-        ...state,
-        refreshTokenLoading: false,
-        refreshTokenError: action.payload.error
+        endDate: action.payload.endDate 
       };
     default:
       return state;
