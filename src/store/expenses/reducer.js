@@ -2,7 +2,8 @@ import types from "./types";
 
 const initialState = {
   userId: "",
-  accessToken: ""
+  accessToken: "",
+  calendarDialogVisible: false
 };
 
 export default function expensesReducer(state = initialState, action) {
@@ -13,6 +14,11 @@ export default function expensesReducer(state = initialState, action) {
         signInSuccess: false,
         signInLoading: true,
         signInError: null
+      };
+      case types.SET_CALENDAR_DIALOG_VISIBLE:
+      return {
+        ...state,
+        calendarDialogVisible: action.payload.calendarDialogVisible
       };
     default:
       return state;

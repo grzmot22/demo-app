@@ -1,32 +1,52 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Button, List } from 'react-native-paper';
+import styled from 'styled-components/native';
+import { connect } from "react-redux";
+import { setCalendarDialogVisible } from "../store/expenses/actions";
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+  export class ExpensesScreen extends React.Component {
 
-export default function ExpensesScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.js" />
-    </View>
-  );
+    render(){
+      return (
+        <Container>
+        <StyledButton mode="contained" onPress={() => console.log('Pressed')} >Add</StyledButton>
+        <StyledList
+        title="First Item"
+        description="Item description"
+        left={props => <List.Icon {...props} icon="" />}
+      />
+        </Container>
+      );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+const mapStateToProps = ({ auth, expenses, filters }) => ({
+  userId: auth.userId,
+  expenses: expenses,
+  selectedDate: filters.selectedDate
 });
+
+const mapDispatchToProps = dispatch => ({
+  setCalendarDialogVisible: visible => dispatch(setCalendarDialogVisible(visible)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesScreen);
+
+
+const Container = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-Content: center;
+`;
+
+const StyledButton = styled(Button)`
+align-items: flex-start;
+justify-content: flex-start;
+`;
+
+const StyledList = styled(List.Item)`
+display:flex;
+align-items: flex-start;
+justify-content: flex-start;
+color: white;
+`;

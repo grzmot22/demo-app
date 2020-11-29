@@ -1,5 +1,6 @@
 
 import types from "./types";
+import database from '../firebase/firebase'
 
 export const removeExpense = (id) => ({
   type: types.REMOVE_EXPENSE,
@@ -78,3 +79,8 @@ export const startSetExpenses = () => {
   });
 };
 };
+
+export const setCalendarDialogVisible = calendarDialogVisible => ({
+  type: types.SET_CALENDAR_DIALOG_VISIBLE,
+  payload: { calendarDialogVisible }
+});
