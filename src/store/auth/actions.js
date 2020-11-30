@@ -1,12 +1,31 @@
 import types from "./types";
+import * as Google from 'expo-google-app-auth';
+import { startSetExpenses } from "../expenses/actions";
 
+async function signInWithGoogleAsync() {
+  try {
+    const result = await Google.logInAsync({
+      androidClientId: "962931478339-1ur6v20f1b44ks21hd2b6vn58fngtidh.apps.googleusercontent.com",
+      iosClientId: "962931478339-9rdvv40ev5dt4pe0mg339710p1d8ccng.apps.googleusercontent.com",
+      scopes: ['profile', 'email'],
+    });
+
+    if (result.type === 'success') {
+      return result;
+    } else {
+      return { cancelled: true };
+    }
+  } catch (e) {
+    return { error: true };
+  }
+}
 
 export const signInFailure = error => ({
   type: types.SIGN_IN_FAILURE,
   payload: { error }
 });
 
-export const signIn = (login, password, returningUser = false) => {
+export const signIn = () => {
   const signInBegin = () => ({
     type: types.SIGN_IN_BEGIN
   });
@@ -17,54 +36,20 @@ export const signIn = (login, password, returningUser = false) => {
   });
 
   return async (dispatch, getState) => {
-    if ((!login || !password) && !returningUser) {
-      dispatch(signInFailure(composeError("Please_provide_login_and_password")));
-      return;
-    }
+ 
 
     dispatch(signInBegin());
     console.log("signInBegin");
     try {
-      let response = await axios(config.SERVICES.AUTHENTICATION.LOGIN(login, password));
-      let { data } = response;
-      await deviceStorage.setLoginCredentials(login, password);
-      await deviceStorage.setUserId(data.userId);
-      await deviceStorage.setTokens(data.accessToken, data.refreshToken);
-      await setupAnalytics(data.userId);
-
+      const data = await signInWithGoogleAsync()
+      console.log(data);
       dispatch(signInSuccess(data));
+      dispatch(startSetExpenses())
       console.log("signInSuccess");
     } catch (error) {
       console.log("signInFailure");
-      sendError(error);
-      handleSignInError(dispatch, error, returningUser);
     }
   };
-};
-
-export const handleSignInError = (dispatch, error, returningUser) => {
-  if (error.response) {
-    switch (error.response.status) {
-      case 400:
-        {
-          if (returningUser) {
-            dispatch(signInFailure(composeError("", 0)));
-          } else {
-            dispatch(
-              signInFailure(composeError("The_username_or_password_you_provided_is_incorrect", 400))
-            );
-          }
-        }
-        break;
-      case 401:
-        dispatch(signInFailure(composeError("You_dont_have_permission_to_log_in", 401)));
-        break;
-      default:
-        break;
-    }
-  } else {
-    dispatch(signInFailure(composeError("Unable_to_establish_server_connection")));
-  }
 };
 
 export const signOut = () => {
@@ -79,46 +64,6 @@ export const signOut = () => {
       console.log("signOutSuccess");
     } catch (error) {
       console.log("signOutFailure");
-    }
-  };
-};
-
-export const tryRefreshToken = (accessToken, refreshToken) => {
-  const refreshTokenBegin = () => ({
-    type: types.REFRESH_TOKEN_BEGIN
-  });
-
-  const refreshTokenSuccess = data => ({
-    type: types.REFRESH_TOKEN_SUCCESS,
-    payload: { ...data }
-  });
-
-  const refreshTokenFailure = error => ({
-    type: types.REFRESH_TOKEN_FAILURE,
-    payload: { error }
-  });
-
-  return async dispatch => {
-    console.log("refreshTokenBegin");
-    dispatch(refreshTokenBegin());
-
-    if (!accessToken || !refreshToken) {
-      dispatch(refreshTokenFailure(composeError("")));
-      return;
-    }
-
-    try {
-      let response = await axios(
-        config.SERVICES.AUTHENTICATION.REFRESH_TOKEN(accessToken, refreshToken)
-      );
-      let { data } = response;
-      await deviceStorage.setUserId(data.userId);
-      await deviceStorage.setTokens(data.accessToken, data.refreshToken);
-      dispatch(refreshTokenSuccess(data));
-      console.log("refreshTokenSuccess");
-    } catch (error) {
-      console.log("refreshTokenFailure");
-      dispatch(refreshTokenFailure(error));
     }
   };
 };

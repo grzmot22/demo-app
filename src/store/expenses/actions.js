@@ -1,6 +1,6 @@
 
 import types from "./types";
-import database from '../firebase/firebase'
+import database from '../../firebase/firebase'
 
 export const removeExpense = (id) => ({
   type: types.REMOVE_EXPENSE,
@@ -16,7 +16,7 @@ export const addExpense = (expenseData) => {
 
   return async (dispatch, getState) => {
 
-    const uid = getState().auth.uid;
+    const uid = getState().auth.userId;
       const {
         description = '',
         note = '',
@@ -36,7 +36,7 @@ export const addExpense = (expenseData) => {
 
 export const startRemoveExpense = ({ id } = {}) => {
   return (dispatch, getState) => {
-    const uid = getState().auth.uid;
+    const uid = getState().auth.userId;
     return database.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
       dispatch(removeExpense({ id }));
     });   
@@ -50,7 +50,7 @@ export const editExpense = (id, updates) => ({
 
 export const startEditExpense = (id, updates) =>{
 return (dispatch, getState) => {
-  const uid = getState().auth.uid;
+  const uid = getState().auth.userId;
   return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(() =>{
     dispatch(editExpense(id, updates));
   });
@@ -64,7 +64,7 @@ export const setExpenses = (expenses) => ({
 
 export const startSetExpenses = () => {
  return (dispatch, getState) => {
-  const uid = getState().auth.uid;
+  const uid = getState().auth.userId;
   return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
     const expenses = [];
 
@@ -74,7 +74,6 @@ export const startSetExpenses = () => {
         ...childSnapshot.val()
       });
     });
-
     dispatch(setExpenses(expenses));
   });
 };

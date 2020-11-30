@@ -7,6 +7,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import PlacesScreen from '../screens/PlacesScreen';
 import ExpensesScreen from "../screens/ExpensesScreen";
+import AddExpensesScreen from "../screens/AddExpensesScreen";
+import LoginScreen from "../screens/LoginScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -60,6 +62,11 @@ function ExpensesNavigator() {
         component={ExpensesScreen}
         options={{ headerTitle: 'Expenses' }}
       />
+      <ExpensesStack.Screen
+        name="AddExpenses"
+        component={AddExpensesScreen}
+        options={{ headerTitle: 'Add Expenses' }}
+      />
     </ExpensesStack.Navigator>
   );
 }
@@ -85,7 +92,7 @@ function SettingsNavigator() {
       <SettingsStack.Navigator>
         <SettingsStack.Screen
           name="PlacesScreen"
-          component={PlacesScreen}
+          component={LoginScreen}
           options={{ headerTitle: 'Settings' }}
         />
       </SettingsStack.Navigator>

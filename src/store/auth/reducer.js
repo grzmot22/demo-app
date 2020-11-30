@@ -2,14 +2,13 @@ import types from "./types";
 
 const initialState = {
   userId: "",
+  user: {},
   accessToken: "",
+  idToken: "",
   refreshToken: "",
   signInSuccess: false,
   signInLoading: false,
   signInError: null,
-  refreshTokenSuccess: false,
-  refreshTokenLoading: false,
-  refreshTokenError: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -28,7 +27,10 @@ export default function authReducer(state = initialState, action) {
         signInLoading: false,
         userId: action.payload.userId,
         accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken
+        idToken: action.payload.idToken,
+        refreshToken: action.payload.refreshToken,
+        userId: action.payload.user.id,
+        user: action.payload.user,
       };
     case types.SIGN_IN_FAILURE:
       return {
@@ -42,28 +44,6 @@ export default function authReducer(state = initialState, action) {
         userId: "",
         accessToken: "",
         refreshToken: ""
-      };
-    case types.REFRESH_TOKEN_BEGIN:
-      return {
-        ...state,
-        refreshTokenSuccess: false,
-        refreshTokenLoading: true,
-        refreshTokenError: null
-      };
-    case types.REFRESH_TOKEN_SUCCESS:
-      return {
-        ...state,
-        refreshTokenSuccess: true,
-        refreshTokenLoading: false,
-        userId: action.payload.userId,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken
-      };
-    case types.REFRESH_TOKEN_FAILURE:
-      return {
-        ...state,
-        refreshTokenLoading: false,
-        refreshTokenError: action.payload.error
       };
     default:
       return state;

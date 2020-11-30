@@ -1,25 +1,29 @@
 import types from "./types";
 
-const initialState = {
-  userId: "",
-  accessToken: "",
-  calendarDialogVisible: false
-};
+const initialState = [];
 
 export default function expensesReducer(state = initialState, action) {
   switch (action.type) {
-    case types.SIGN_IN_BEGIN:
-      return {
+    case 'ADD_EXPENSE':
+      return [
         ...state,
-        signInSuccess: false,
-        signInLoading: true,
-        signInError: null
-      };
-      case types.SET_CALENDAR_DIALOG_VISIBLE:
-      return {
-        ...state,
-        calendarDialogVisible: action.payload.calendarDialogVisible
-      };
+        action.expense
+      ];
+    case 'REMOVE_EXPENSE':
+      return state.filter(({ id }) => id !== action.id);
+    case 'EDIT_EXPENSE':
+      return state.map((expense) => {
+        if (expense.id === action.id) {
+          return {
+            ...expense,
+            ...action.updates
+          };
+        } else {
+          return expense;
+        };
+      });
+    case 'SET_EXPENSES':
+      return action.payload.expenses;
     default:
       return state;
   }

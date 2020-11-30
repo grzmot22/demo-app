@@ -27,7 +27,6 @@ export default function App() {
       accent: '#f1c40f',
       text: colorScheme === "dark" ? "white" : "black"
     },
-    
   };
 
   if (!isLoadingComplete) {

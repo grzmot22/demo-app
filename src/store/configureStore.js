@@ -1,4 +1,3 @@
-import * as asyncInitialState from "redux-async-initial-state";
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import authReducer from "./auth/reducer";
@@ -8,14 +7,12 @@ import authTypes from "./auth/types";
 import filterReducer from "./filters/reducer";
 
 
-const reducer = asyncInitialState.outerReducer(
-  combineReducers({
+const reducer = combineReducers({
     auth: authReducer,
     preferences: preferencesReducer,
     expenses: expensesReducer,
     filters:filterReducer
-  })
-);
+  });
 
 const rootReducer = (state, action) => {
   if (action.type === authTypes.SIGN_OUT) {
@@ -28,7 +25,7 @@ const rootReducer = (state, action) => {
 export default () => {
   const store = createStore(
     rootReducer,
-    compose(applyMiddleware(asyncInitialState.middleware()), applyMiddleware(thunk))
+    compose(applyMiddleware(thunk))
   );
   return store;
 };

@@ -1,45 +1,58 @@
 import * as React from 'react';
-import { Button, Text } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import styled from 'styled-components/native';
 import moment from 'moment';
 import { connect } from "react-redux";
-import { setCalendarDialogVisible } from "../store/expenses/actions";
+import { addExpense } from "../store/expenses/actions";
 
-  export class ExpensesScreen extends React.Component {
+  export class AddExpensesScreen extends React.Component {
 
     state = {
-      description: props.expense ? props.expense.description : '',
-      note: props.expense ? props.expense.note : '',
-      amount: props.expense ? (props.expense.amount / 100).toString() : '',
-      createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+      description: '',
+      note:  '',
+      amount:  '',
+      createdAt: moment(),
       error: ''
   };
 
     render(){
       return (
         <Container>
-        <TextField             
-              placeholder={""}
-              onChangeText={username => this.setState({ username })}
-              value={this.state.username}/>
-        <TextField/>
-       <StyledButton mode="contained" onPress={() => console.log('Pressed')} >Submit</StyledButton>
+        <TextField           
+              placeholder={"Description"}
+              onChangeText={description => this.setState({ description })}
+              value={this.state.description}
+              />
+        <TextField   placeholder={"Note"}
+              onChangeText={note => this.setState({ note })}
+              value={this.state.note}
+              />
+       <TextField   placeholder={"Amount"}
+              onChangeText={amount => this.setState({ amount })}
+              value={this.state.amount}
+              />
+       <StyledButton mode="contained" onPress={() => this.props.addExpense({
+                description: this.state.description,
+                amount: parseFloat(this.state.amount, 10) * 100,
+                createdAt: this.state.createdAt.valueOf(),
+                note: this.state.note
+            })} >Submit</StyledButton>
         </Container>
       );
     }
 }
 
 const mapStateToProps = ({ auth, expenses, filters }) => ({
-  userId: auth.userId,
+  userId: auth,
   expenses: expenses,
   selectedDate: filters.selectedDate
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCalendarDialogVisible: visible => dispatch(setCalendarDialogVisible(visible)),
+  addExpense: expense => dispatch(addExpense(expense)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpensesScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpensesScreen);
 
 
 const Container = styled.View`
@@ -53,6 +66,8 @@ align-items: flex-start;
 justify-content: flex-start;
 `;
 
-const TextField = styled(Text)`::after
-
-`
+const TextField = styled(TextInput)` 
+width: 80%;
+margin-bottom: 10px;
+background-color: darkslategrey;
+`;

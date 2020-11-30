@@ -9,6 +9,7 @@ export default {
           Expenses: {
             screens: {
               ExpensesScreen: 'one',
+              AddExpensesScreen: 'AddExpenses'
             },
           },
           Places: {

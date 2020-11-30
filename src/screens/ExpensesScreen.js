@@ -9,11 +9,12 @@ import { setCalendarDialogVisible } from "../store/expenses/actions";
     render(){
       return (
         <Container>
-        <StyledButton mode="contained" onPress={() => console.log('Pressed')} >Add</StyledButton>
+        <StyledButton mode="contained"  onPress={() => this.props.navigation.navigate('AddExpenses')} >Add</StyledButton>
+        <StyledButton mode="contained"  onPress={() => console.log("d",this.props.expenses)} >ee</StyledButton>
         <StyledList
         title="First Item"
         description="Item description"
-        left={props => <List.Icon {...props} icon="" />}
+        left={props => <List.Icon {...props} icon="cash" />}
       />
         </Container>
       );
