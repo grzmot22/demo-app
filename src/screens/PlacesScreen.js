@@ -1,32 +1,38 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import Constants from 'expo-constants';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import styled from 'styled-components/native';
+const GOOGLE_PLACES_API_KEY = 'AIzaSyDBR7WsjsAwYq5a01jP4j8SLKorszeyvBI';
 
 export default function PlacesScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabTwoScreen.js" />
-    </View>
+    <Container>
+   <TextField
+        placeholder="Search"
+        query={{
+          key: GOOGLE_PLACES_API_KEY,
+          language: 'en', // language of the results
+        }}
+        onPress={(data, details = null) => console.log(data)}
+        onFail={(error) => console.error(error)}
+        requestUrl={{
+          url:
+            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
+          useOnPlatform: 'web',
+        }} // this in only required for use on the web. See https://git.io/JflFv more for details.
+      />
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+
+
+const Container = styled.View`
+`;
+
+
+
+const TextField = styled(GooglePlacesAutocomplete)` 
+width: 100px;
+margin-bottom: 10px;
+`;
