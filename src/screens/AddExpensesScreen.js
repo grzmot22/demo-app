@@ -14,6 +14,22 @@ import { addExpense } from "../store/expenses/actions";
       createdAt: moment(),
       error: ''
   };
+  
+    onSubmit = () => {
+      const {description,amount,createdAt,note} = this.state;
+      if(!description || !amount) {
+        this.setState(() =>({error: 'Please provide description and amount.'}))
+      }else {
+        this.setState(() =>({error: ''}))
+        this.props.addExpense({
+          description: description,
+          amount: parseFloat(amount, 10) * 100,
+          createdAt: createdAt.valueOf(),
+          note: note
+      })
+      this.props.navigation.navigate('Expenses');
+      }
+    }
 
     render(){
       return (
@@ -31,12 +47,8 @@ import { addExpense } from "../store/expenses/actions";
               onChangeText={amount => this.setState({ amount })}
               value={this.state.amount}
               />
-       <StyledButton mode="contained" onPress={() => this.props.addExpense({
-                description: this.state.description,
-                amount: parseFloat(this.state.amount, 10) * 100,
-                createdAt: this.state.createdAt.valueOf(),
-                note: this.state.note
-            })} >Submit</StyledButton>
+       <StyledButton mode="contained" onPress={() => this.onSubmit()} >Submit</StyledButton>
+       <ErrorMessage>{this.state.error}</ErrorMessage>
         </Container>
       );
     }
@@ -71,3 +83,11 @@ width: 80%;
 margin-bottom: 10px;
 background-color: darkslategrey;
 `;
+
+const ErrorMessage = styled.Text`
+color: red;
+margin-top: 10px;
+height:20px;
+width: 80%;
+margin-left: 30px;
+`

@@ -43,10 +43,10 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Settings"
+        name="Login"
         component={SettingsNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon family="Ionicons"  name="ios-settings" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon family="MaterialIcons"  name="account-circle" color={color} />,
         }}
       />
     </BottomTab.Navigator>

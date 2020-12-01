@@ -40,7 +40,7 @@ export default function NotificationScreen() {
       Notifications.removeNotificationSubscription(responseListener);
     };
   }, []);
-  console.log("Expo push token: ", expoPushToken)
+  
   return (
     <View
       style={{

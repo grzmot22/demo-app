@@ -1,8 +1,6 @@
 import * as React from 'react';
-import Constants from 'expo-constants';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import styled from 'styled-components/native';
-const GOOGLE_PLACES_API_KEY = 'AIzaSyDBR7WsjsAwYq5a01jP4j8SLKorszeyvBI';
 
 export default function PlacesScreen() {
   return (
@@ -10,7 +8,7 @@ export default function PlacesScreen() {
    <TextField
         placeholder="Search"
         query={{
-          key: GOOGLE_PLACES_API_KEY,
+          key: "AIzaSyDBR7WsjsAwYq5a01jP4j8SLKorszeyvBI",
           language: 'en', // language of the results
         }}
         onPress={(data, details = null) => console.log(data)}

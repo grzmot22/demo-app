@@ -3,7 +3,6 @@ import { Button, List, Text } from 'react-native-paper';
 import styled from 'styled-components/native';
 import numeral from 'numeral';
 import { connect } from "react-redux";
-import { setCalendarDialogVisible } from "../store/expenses/actions";
 
   export class ExpensesScreen extends React.Component {
     
@@ -12,10 +11,12 @@ import { setCalendarDialogVisible } from "../store/expenses/actions";
       return (
         <Container>
         <StyledButton mode="contained"  onPress={() => this.props.navigation.navigate('AddExpenses')} >Add</StyledButton>
-       {this.props.expenses.length !== 0 ? this.props.expenses.map((expense)=> (
+       {this.props.expenses.length !== 0 ? this.props.expenses.map((expense, i)=> (
          <StyledList
-        title={expense.description}
-        description={`${numeral(expense.amount / 100).format('$0,0.00')} ${expense.note}`}
+         key={i}
+        title={expense ? expense.description : ""}
+        description={expense ? `${numeral(expense.amount / 100).format('$0,0.00')} ${expense.note}`: ""}
+        onPress={() => {this.props.navigation.navigate('EditExpenses', { expense: expense })}}
         left={props => <List.Icon {...props} icon="cash" />}
       />)): <StyledText>No Expenses</StyledText>}
         </Container>
@@ -29,11 +30,8 @@ const mapStateToProps = ({ auth, expenses, filters }) => ({
   selectedDate: filters.selectedDate
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCalendarDialogVisible: visible => dispatch(setCalendarDialogVisible(visible)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExpensesScreen);
+export default connect(mapStateToProps)(ExpensesScreen);
 
 
 const Container = styled.View`
