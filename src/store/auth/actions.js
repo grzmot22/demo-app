@@ -35,14 +35,13 @@ export const signIn = () => {
     payload: { ...data }
   });
 
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
  
 
     dispatch(signInBegin());
     console.log("signInBegin");
     try {
       const data = await signInWithGoogleAsync()
-      console.log(data);
       dispatch(signInSuccess(data));
       dispatch(startSetExpenses())
       console.log("signInSuccess");
