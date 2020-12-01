@@ -2,35 +2,49 @@ import * as React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import styled from 'styled-components/native';
 
-export default function PlacesScreen() {
+
+const GooglePlacesInput = () => {
+
+  const [place, setPlace] = React.useState("");
+
   return (
-    <Container>
-   <TextField
-        placeholder="Search"
-        query={{
-          key: "AIzaSyDBR7WsjsAwYq5a01jP4j8SLKorszeyvBI",
-          language: 'en', // language of the results
-        }}
-        onPress={(data, details = null) => console.log(data)}
-        onFail={(error) => console.error(error)}
-        requestUrl={{
-          url:
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
-          useOnPlatform: 'web',
-        }} // this in only required for use on the web. See https://git.io/JflFv more for details.
-      />
-    </Container>
+  <Container>
+  <GoogleContainer>
+    <GooglePlacesAutocomplete
+      placeholder='Search'
+      onPress={(data, details = null) => {
+        // 'details' is provided when fetchDetails = true
+        setPlace(data.description)
+        console.log(data, details.geometry);
+      }}
+      query={{
+        key: 'AIzaSyDBR7WsjsAwYq5a01jP4j8SLKorszeyvBI',
+        language: 'en',
+      }}
+    />
+    </GoogleContainer>
+    <Text>{`Your selected place: ${place}`}</Text>
+  </Container>
+
+
   );
-}
+};
 
-
+export default GooglePlacesInput;
 
 const Container = styled.View`
+flex:1;
+height:1000px;
 `;
-
-
-
-const TextField = styled(GooglePlacesAutocomplete)` 
-width: 100px;
-margin-bottom: 10px;
+const GoogleContainer = styled.View`
+height:400px;
 `;
+const Text = styled.Text`
+display: flex;
+color: red;
+margin-top: 50px;
+align-items: center;
+height:100%;
+width: 80%;
+margin-left: 30px;
+`

@@ -6,7 +6,12 @@ import { signIn } from "../store/auth/actions";
 
 
   export class LoginScreen extends React.Component {
-
+    componentDidUpdate(prevProps) {
+      if(prevProps.userId !== this.props.userId) {
+        this.props.navigation.navigate('Expenses');
+      }
+    }
+    
     render(){
       return (
         <Container>
