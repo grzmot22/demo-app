@@ -8,8 +8,9 @@ export default {
         screens: {
           Expenses: {
             screens: {
-              ExpensesScreen: 'one',
-              AddExpensesScreen: 'AddExpenses'
+              ExpensesScreen: 'Expenses',
+              AddExpensesScreen: 'AddExpenses',
+              EditExpensesScreen: 'EditExpenses'
             },
           },
           Places: {

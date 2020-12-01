@@ -9,6 +9,8 @@ import PlacesScreen from '../screens/PlacesScreen';
 import ExpensesScreen from "../screens/ExpensesScreen";
 import AddExpensesScreen from "../screens/AddExpensesScreen";
 import LoginScreen from "../screens/LoginScreen";
+import  EditExpensesScreen  from "../screens/EditExpensesScreen";
+import NotificationScreen from "../screens/NotificationScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -31,6 +33,13 @@ export default function BottomTabNavigator() {
         component={PlacesNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon family="Ionicons"  name="md-map" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Notifications"
+        component={NotificationNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon family="Ionicons"  name="ios-settings" color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -67,6 +76,11 @@ function ExpensesNavigator() {
         component={AddExpensesScreen}
         options={{ headerTitle: 'Add Expenses' }}
       />
+      <ExpensesStack.Screen
+        name="EditExpenses"
+        component={EditExpensesScreen}
+        options={{ headerTitle: 'Edit Expenses' }}
+      />
     </ExpensesStack.Navigator>
   );
 }
@@ -96,5 +110,19 @@ function SettingsNavigator() {
           options={{ headerTitle: 'Settings' }}
         />
       </SettingsStack.Navigator>
+    );
+  }
+
+  const NotificationStack = createStackNavigator();
+
+function NotificationNavigator() {
+    return (
+      <NotificationStack.Navigator>
+        <NotificationStack.Screen
+          name="Notification"
+          component={NotificationScreen}
+          options={{ headerTitle: 'Notification' }}
+        />
+      </NotificationStack.Navigator>
     );
   }
